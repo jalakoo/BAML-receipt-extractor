@@ -1,16 +1,15 @@
-# Receipt Server
+# Receipt Data Extraction
 
-FastAPI Server for processing receipts
+Receipt data extraction using [BAML](https://www.boundaryml.com)
 
-## Usage using poetry
+## Output data
 
-[poetry](https://python-poetry.org)
+See the baml_src/receipt_models.baml file for structured output data model.
 
-```
-poetry install
-poetry run uvicorn main:app --reload
-```
+## Usage
 
-## Interactive API Docs
+Use the functions in the baml_util.py file to extract data from receipt images or urls of receipt images.
 
-Will be available at http://localhost:8000/docs
+## Samples
+
+See branches for encapsulating examples (ie in a FastAPI server, as a Google Cloud Run function etc)
