@@ -4,6 +4,8 @@ from typing import Optional, List
 from PIL import Image
 from PIL.ExifTags import TAGS
 from io import BytesIO
+from baml_py import Image
+from baml_client import b
 
 app = FastAPI()
 
