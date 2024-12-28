@@ -1,16 +1,9 @@
 from fastapi import FastAPI, File, UploadFile
 from pydantic import BaseModel
 from typing import Optional, List
-from PIL import Image as PILImage
-from PIL.ExifTags import TAGS
+from baml_util import extract_receipt_from_url, extract_receipt_from_image
 from io import BytesIO
-from baml_py import Image
-from baml_client import b
-from dotenv import load_dotenv
-import os
-import base64
 
-load_dotenv()
 app = FastAPI()
 
 
@@ -36,8 +29,7 @@ async def scan_receipt_url(url: str):
     - **Returns**: The filename, format, and metadata of the image.
     """
 
-    img = Image.from_url(url)
-    output = b.ExtractReceiptFromImage(img)
+    output = await extract_receipt_from_url(url)
     return output
 
 
@@ -49,24 +41,7 @@ async def scan_receipt_file(file: UploadFile = File(...)):
     - **Returns**: The filename, format, and metadata of the image.
     """
 
-    try:
-        # Read the uploaded file into memory
-        file_contents = await file.read()
-        image_file = BytesIO(file_contents)
-
-        # Extract details using BAML
-        with PILImage.open(image_file) as img:
-
-            # Need to convert to base64 to pass to BAML
-            buffered = BytesIO()
-            img.save(buffered, format="PNG")
-            img_base64 = base64.b64encode(buffered.getvalue()).decode("utf-8")
-
-            img_64 = Image.from_base64("image/png", img_base64)
-            output = b.ExtractReceiptFromImage(img_64)
-
-            # Return output as JSON
-            return output
-
-    except Exception as e:
-        return {"error": f"An error occurred while processing the file: {e}"}
+    file_contents = await file.read()
+    image_file = BytesIO(file_contents)
+    output = await extract_receipt_from_image(image_file)
+    return output

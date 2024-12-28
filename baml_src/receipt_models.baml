@@ -8,7 +8,7 @@ class ReceiptItem {
 }
 
 class Receipt {
-  items ReceiptItem[]
+  line_items ReceiptItem[]
   total_amount float
   date string @description(#"
     Date of the transaction.
