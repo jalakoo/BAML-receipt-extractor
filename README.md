@@ -2,20 +2,22 @@
 
 FastAPI Server for processing receipts
 
-## Requirements
+## Usage using uv
 
-- [uv for dependency management](https://github.com/astral-sh/uv)
-
-## Setup
+[uv dependency management](https://github.com/astral-sh/uv)
 
 ```
 uv sync
-```
-
-## Usage
-
-```
 uv run uvicorn main:app --reload
+```
+
+## Usage using poetry
+
+[poetry](https://python-poetry.org)
+
+```
+poetry install
+poetry run uvicorn main:app --reload
 ```
 
 ## Interactive API Docs
