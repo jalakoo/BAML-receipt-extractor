@@ -14,7 +14,7 @@ class Receipt {
     Date of the transaction.
     "#)
   time string @description(#"
-    Time of the transaction.
+    Time of the transaction in 24-hour format.
     "#)
 
   business string @description(#"
