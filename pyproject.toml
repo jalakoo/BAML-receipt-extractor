@@ -1,0 +1,29 @@
+[project]
+name = "BAML-receipt-extractor"
+version = "0.1.0"
+description = "BAML util functions for extracting receipt information"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "baml-py>=0.70.5",
+    "pillow>=11.0.0",
+    "python-dotenv>=1.0.1",
+]
+
+[tool.poetry]
+name = "receipt-server"
+version = "0.1.0"
+description = ""
+authors = ["jalakoo <jalakoo@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+python-dotenv = "^1.0.1"
+baml-py = "^0.70.5"
+pillow = "^11.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
