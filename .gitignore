@@ -11,3 +11,6 @@ wheels/
 
 # Virtual environments
 .venv
+
+# OS
+.DS_Store

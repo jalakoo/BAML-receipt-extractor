@@ -21,7 +21,6 @@ readme = "README.md"
 python = "^3.12"
 python-dotenv = "^1.0.1"
 baml-py = "^0.70.5"
-pillow = "^11.0.0"
 fastapi = "^0.115.6"
 
 

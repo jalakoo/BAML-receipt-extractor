@@ -1,24 +1,9 @@
 from fastapi import FastAPI, File, UploadFile
-from pydantic import BaseModel
-from typing import Optional, List
-from baml_util import extract_receipt_from_url, extract_receipt_from_image
-from io import BytesIO
+from baml_util import extract_receipt_from_url, extract_receipt_from_base64
+import base64
+import logging
 
 app = FastAPI()
-
-
-class ReceiptItem(BaseModel):
-    description: str
-    quantity: int
-    price: float
-
-
-class Receipt(BaseModel):
-    items: List[ReceiptItem]
-    total_amount: float
-    date: str
-    vendor: str
-    address: Optional[str]
 
 
 @app.post("/parse_receipt_url")
@@ -29,7 +14,11 @@ async def scan_receipt_url(url: str):
     - **Returns**: The filename, format, and metadata of the image.
     """
 
-    output = await extract_receipt_from_url(url)
+    try:
+        output = await extract_receipt_from_url(url)
+    except Exception as e:
+        logging.error(e)
+        return {"error": f"Failed to extract receipt from image: {e}"}
     return output
 
 
@@ -41,7 +30,13 @@ async def scan_receipt_file(file: UploadFile = File(...)):
     - **Returns**: The filename, format, and metadata of the image.
     """
 
+    # Encode the image file to base64
     file_contents = await file.read()
-    image_file = BytesIO(file_contents)
-    output = await extract_receipt_from_image(image_file)
+    image_file = base64.b64encode(file_contents).decode("utf-8")
+
+    try:
+        output = await extract_receipt_from_base64(image_file)
+    except Exception as e:
+        logging.error(e)
+        return {"error": f"Failed to extract receipt from image: {e}"}
     return output
